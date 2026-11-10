@@ -1,77 +1,80 @@
-# Home Assistant Lovelace Dashboard – Brink Flair 400
+# Home Assistant Lovelace Dashboard - Brink Flair 400
 #
-# Bildet die Funktionen des lokalen ESPHome-Web-Dashboards als natives HA-
-# Dashboard nach. Läuft über die normale Home-Assistant-API und ist damit
-# automatisch über Cloud-/Fernzugriff erreichbar, ohne das ESP32 zusätzlich
-# ins Internet zu exponieren.
+# Recreates the functions of the local ESPHome web dashboard as a native Home
+# Assistant dashboard. It runs through the regular Home Assistant API and is
+# therefore reachable via cloud/remote access without exposing the ESP32 to
+# the internet.
 #
-# Einrichtung:
-#   1. Alle Vorkommen von "DEIN_BEREICH_" unten durch den tatsächlichen
-#      Bereichs-/Geräte-Präfix deiner Entities ersetzen (Editor: Suchen &
-#      Ersetzen). Die genauen Entity-IDs findest du in Home Assistant unter
-#      Entwicklerwerkzeuge -> Zustände (nach "brink" filtern).
-#   2. Home Assistant -> Einstellungen -> Dashboards -> Dashboard hinzufügen
-#      -> "Neues Dashboard von Grund auf neu erstellen".
-#   3. Geöffnetes Dashboard -> Stift (bearbeiten) -> Drei-Punkte-Menü oben
-#      rechts -> "Rohkonfigurationseditor".
-#   4. Kompletten Inhalt dieser Datei einfügen, vorhandenen Inhalt ersetzen.
-#   5. Speichern.
+# Setup:
+#   1. Replace every occurrence of "DEIN_BEREICH_" below with the actual
+#      area/device prefix of your entities (use the editor's find & replace).
+#      You can find the exact entity IDs in Home Assistant under
+#      Developer tools -> States (filter by "brink").
+#   2. Home Assistant -> Settings -> Dashboards -> Add dashboard
+#      -> "New dashboard from scratch".
+#   3. Open the new dashboard -> pencil (edit) -> three-dot menu at the top
+#      right -> "Raw configuration editor".
+#   4. Paste the complete contents of this file, replacing the existing ones.
+#   5. Save.
 #
-# Falls eine Karte im Editor rot/"Entität nicht gefunden" anzeigt: Entity-ID
-# in Entwicklerwerkzeuge -> Zustände nachschlagen und korrigieren.
+# If a card shows red / "Entity not found" in the editor: look up the entity
+# ID under Developer tools -> States and correct it.
+#
+# Note: the entity IDs keep their German names because they are derived from
+# the entity names defined in brinkflair400.yaml.
 
 views:
-  - title: Lüftung
+  - title: Ventilation
     path: brink-flair-400
     icon: mdi:air-filter
     cards:
       - type: entities
-        title: Steuerung
+        title: Control
         icon: mdi:fan-auto
         entities:
           - entity: select.DEIN_BEREICH_brinkflair400_brink_betriebsmodus
-            name: Betriebsmodus
+            name: Operating mode
           - entity: sensor.DEIN_BEREICH_brink_flair_400_steuerung_brink_letzte_aktion
-            name: Letzte Aktion
+            name: Last action
           - entity: select.DEIN_BEREICH_brinkflair400_bypass_mode
-            name: Bypass Modus
+            name: Bypass mode
           - entity: switch.DEIN_BEREICH_brinkflair400_bypass_boost
-            name: Bypass Boost aktiv
+            name: Bypass boost active
           - entity: number.DEIN_BEREICH_brink_flair_400_bypass_boost_stufe
-            name: Bypass Boost Stufe
+            name: Bypass boost level
           - entity: button.DEIN_BEREICH_brinkflair400_filter_reset
-            name: Filter zurücksetzen
+            name: Reset filter
           - entity: button.DEIN_BEREICH_brinkflair400_restart
-            name: ESP neu starten
+            name: Restart ESP
       - type: entities
         title: Status
         icon: mdi:information-outline
         entities:
           - entity: sensor.DEIN_BEREICH_brinkflair400_status
-            name: Betriebsstatus (Rohwert)
+            name: Operating status (raw value)
           - entity: sensor.DEIN_BEREICH_brinkflair400_bypass_status
             name: Bypass
           - entity: sensor.DEIN_BEREICH_brinkflair400_frost_status
-            name: Frostschutz
+            name: Frost protection
           - entity: sensor.DEIN_BEREICH_brinkflair400_filter_status
             name: Filter
           - entity: >-
               binary_sensor.DEIN_BEREICH_brink_flair_400_steuerung_brink_esp_status
-            name: ESP Verbindung
+            name: ESP connection
           - entity: sensor.brink_flair_400_brink_wlan_signal
-            name: WLAN Signal
+            name: Wi-Fi signal
           - entity: sensor.DEIN_BEREICH_brink_flair_400_brink_esp_laufzeit
-            name: ESP Laufzeit
+            name: ESP uptime
       - type: entities
-        title: Klima Außen & Druck
+        title: Outdoor climate & pressure
         icon: mdi:weather-windy
         entities:
           - entity: sensor.DEIN_BEREICH_brink_flair_400_aussenluft_temperatur
-            name: Außenluft Temperatur
+            name: Outdoor air temperature
           - entity: sensor.DEIN_BEREICH_brink_flair_400_zuluft_druck
           - entity: sensor.DEIN_BEREICH_brink_flair_400_abluft_druck
       - type: entities
-        title: Klima Innen (Zu-/Fortluft)
+        title: Indoor climate (supply/exhaust air)
         icon: mdi:home-thermometer-outline
         entities:
           - entity: sensor.DEIN_BEREICH_brink_flair_400_zuluft_temperatur
@@ -91,7 +94,7 @@ views:
           - entity: number.DEIN_BEREICH_brink_flair_400_tage_vor_filterwarnung
           - entity: sensor.DEIN_BEREICH_brink_flair_400_filter_reset_angeschaltet
       - type: entities
-        title: Volumenstrom & Ventilatoren
+        title: Air flow & fans
         icon: mdi:fan
         entities:
           - entity: sensor.DEIN_BEREICH_brink_flair_400_eingestelltes_zuluft_volumen
@@ -104,15 +107,15 @@ views:
               sensor.DEIN_BEREICH_brink_flair_400_geschwindigkeit_abluftventilator
           - type: divider
           - entity: number.DEIN_BEREICH_brinkflair400_flow_0
-            name: Flow Stufe 0 (Urlaub)
+            name: Flow level 0 (Away)
           - entity: number.DEIN_BEREICH_brinkflair400_flow_1
-            name: Flow Stufe 1 (Niedrig)
+            name: Flow level 1 (Low)
           - entity: number.DEIN_BEREICH_brinkflair400_flow_2
-            name: Flow Stufe 2 (Normal)
+            name: Flow level 2 (Normal)
           - entity: number.DEIN_BEREICH_brinkflair400_flow_3
-            name: Flow Stufe 3 (Hoch)
+            name: Flow level 3 (High)
       - type: entities
-        title: Frostschutz
+        title: Frost protection
         icon: mdi:snowflake
         entities:
           - entity: sensor.DEIN_BEREICH_brink_flair_400_frost_vorheizer_power
@@ -120,23 +123,23 @@ views:
           - entity: number.DEIN_BEREICH_brink_flair_400_frostschutztemperatur
           - entity: number.DEIN_BEREICH_brink_flair_400_mindest_einblastemperatur
       - type: entities
-        title: Bypass Einstellungen
+        title: Bypass settings
         icon: mdi:valve
         entities:
           - entity: number.DEIN_BEREICH_brink_flair_400_bypass_wunschtemperatur
           - entity: number.DEIN_BEREICH_brink_flair_400_bypass_aussentemperatur
-            name: Bypass Außentemperatur
+            name: Bypass outdoor temperature
           - entity: number.DEIN_BEREICH_brink_flair_400_bypass_hysterese
       - type: entities
-        title: Erweitert
+        title: Advanced
         icon: mdi:tune
         entities:
           - entity: number.DEIN_BEREICH_brink_flair_400_ungleichgewicht_zuluft
           - entity: number.DEIN_BEREICH_brink_flair_400_ungleichgewicht_abluft
           - entity: sensor.DEIN_BEREICH_brink_flair_400_geratetyp
-            name: Gerätetyp
+            name: Device type
       - type: entities
-        title: Diagnose (Modbus Readback)
+        title: Diagnostics (Modbus readback)
         icon: mdi:bug-outline
         show_header_toggle: false
         entities:
