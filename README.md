@@ -1,4 +1,4 @@
-# Brink Flair 400 ESPHome Modbus
+# Brink Flair 400 ESPHome Modbus for Home Assistant
 
 ESPHome configuration for locally integrating a Brink Flair 400 ventilation
 unit with Home Assistant via Modbus RTU.
